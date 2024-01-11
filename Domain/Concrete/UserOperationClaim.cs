@@ -1,6 +1,8 @@
-﻿namespace Domain.Concrete
+﻿using Core.Entities;
+
+namespace Domain.Concrete
 {
-    public class UserOperationClaim
+    public class UserOperationClaim: IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }
