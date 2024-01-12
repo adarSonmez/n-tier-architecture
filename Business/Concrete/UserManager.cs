@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Hashing;
 using DataAccess.Abstract;
-using Domain.Concrete;
+using Domain.Dtos;
+using Domain.Entities.Concrete;
 
 namespace Business.Concrete
 {
@@ -13,9 +15,25 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public void Add(User user)
+        public void Add(AuthDto authDto)
         {
+            HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
+
+            var user = new User
+            {
+                Id = 0, 
+                Email = authDto.Email,
+                Name = authDto.Name,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+            };
+
             _userDal.Add(user);
+        }
+
+        public List<User> GetList()
+        {
+            return _userDal.GetAll();
         }
     }
 }

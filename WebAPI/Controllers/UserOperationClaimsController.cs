@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -15,7 +16,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Domain.Concrete.UserOperationClaim userOperationClaim)
+        public IActionResult Add(UserOperationClaim userOperationClaim)
         {
             _userOperationClaimService.Add(userOperationClaim);
             return Ok();

@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Domain.Concrete;
+using Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

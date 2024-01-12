@@ -1,4 +1,4 @@
-﻿using Domain.Concrete;
+﻿using Domain.Entities.Concrete;
 
 namespace Business.Abstract
 {

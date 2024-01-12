@@ -1,8 +1,8 @@
-﻿using Core.Entities;
+﻿using Core.Domain.Interfaces;
 
-namespace Domain.Concrete
+namespace Domain.Entities.Concrete
 {
-    public class UserOperationClaim: IEntity
+    public class UserOperationClaim : IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }

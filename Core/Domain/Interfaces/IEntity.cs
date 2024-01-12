@@ -1,4 +1,4 @@
-﻿namespace Core.Entities
+﻿namespace Core.Domain.Interfaces
 {
     public interface IEntity
     {

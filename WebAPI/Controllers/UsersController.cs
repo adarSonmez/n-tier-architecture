@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Domain.Dtos;
+using Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -15,10 +17,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Domain.Concrete.User user)
+        public IActionResult Add(AuthDto authDto)
         {
-            _userService.Add(user);
+            _userService.Add(authDto);
             return Ok();
+        }
+
+        [HttpGet("getList")]
+        public IActionResult GetList()
+        {
+            return Ok(_userService.GetList());
         }
     }
 }
