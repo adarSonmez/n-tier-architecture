@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Domain.Interfaces;
 
 namespace Domain.Entities.Concrete
 {

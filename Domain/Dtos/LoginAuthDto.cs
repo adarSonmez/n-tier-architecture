@@ -2,9 +2,8 @@
 
 namespace Domain.Dtos
 {
-    public class AuthDto: IDto
+    public class LoginAuthDto: IDto
     {
-        public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

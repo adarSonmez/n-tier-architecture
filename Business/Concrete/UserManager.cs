@@ -15,7 +15,7 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public void Add(AuthDto authDto)
+        public void Add(RegisterAuthDto authDto)
         {
             HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
 
@@ -29,6 +29,11 @@ namespace Business.Concrete
             };
 
             _userDal.Add(user);
+        }
+
+        public User? GetByEmail(string email)
+        {
+            return _userDal.Get(u => u.Email == email);
         }
 
         public List<User> GetList()

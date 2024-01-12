@@ -5,7 +5,7 @@ using Domain.Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EnUserOperationClaimDal: EfEntityRepositoryBase<UserOperationClaim, AppDbContext>, IUserOperationClaimDal
+    public class EfUserOperationClaimDal: EfEntityRepositoryBase<UserOperationClaim, AppDbContext>, IUserOperationClaimDal
     {
     }
 }
