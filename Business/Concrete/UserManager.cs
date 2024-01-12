@@ -24,6 +24,7 @@ namespace Business.Concrete
                 Id = 0, 
                 Email = authDto.Email,
                 Name = authDto.Name,
+                ImageUrl = authDto.ImageUrl ?? string.Empty,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
             };

@@ -1,7 +1,10 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Hashing;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using Domain.Dtos;
 
 namespace Business.Concrete
@@ -15,24 +18,44 @@ namespace Business.Concrete
             _userService = userService;
         }
 
-        public void Login(LoginAuthDto authDto)
+        public IResult Login(LoginAuthDto authDto)
         {
-            var user = _userService.GetByEmail(authDto.Email) ?? throw new Exception("User not found");
+            var user = _userService.GetByEmail(authDto.Email);
+
+            if (user == null)
+            {
+                return new ErrorResult("User not found");
+            }
 
             if (!HashingHelper.VerifyPasswordHash(authDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                throw new Exception("Wrong password");
+                return new ErrorResult("Wrong password");
             }
 
-            Console.WriteLine($"Welcome {user.Name}");
+            return new SuccessResult("Login successful");
         }
 
-        public void Register(RegisterAuthDto authDto)
+        public IResult Register(RegisterAuthDto authDto)
         {
             var validator = new UserValidator();
             ValidationTool.Validate(validator, authDto);
 
-            _userService.Add(authDto);
+            var result = BusinessRules.Run(CheckIfUserExists(authDto.Email));
+
+            if (result.Success)
+            {
+                result.Message = "User registered";
+                _userService.Add(authDto);
+            }
+
+            return result;
+        }
+
+        private IResult CheckIfUserExists(string email)
+        {
+            return _userService.GetByEmail(email) != null
+                ? new ErrorResult("User already exists")
+                : new SuccessResult();
         }
     }
 }

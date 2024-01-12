@@ -1,10 +1,11 @@
-﻿using Domain.Dtos;
+﻿using Core.Utilities.Results.Abstract;
+using Domain.Dtos;
 
 namespace Business.Abstract
 {
     public interface IAuthService
     {
-        void Register(RegisterAuthDto authDto);
-        void Login(LoginAuthDto authDto);
+        IResult Register(RegisterAuthDto authDto);
+        IResult Login(LoginAuthDto authDto);
     }
 }

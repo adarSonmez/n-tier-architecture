@@ -19,15 +19,27 @@ namespace WebAPI.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterAuthDto authDto) 
         {
-            _authService.Register(authDto);
-            return StatusCode(StatusCodes.Status201Created);
+            var result = _authService.Register(authDto);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
 
         [HttpPost("login")]
         public IActionResult Login(LoginAuthDto authDto)
         {
-            _authService.Login(authDto);
-            return Ok();
+            var result = _authService.Login(authDto);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
     }
 }
