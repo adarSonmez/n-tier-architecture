@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Hashing;
 using Domain.Dtos;
 
@@ -29,12 +30,7 @@ namespace Business.Concrete
         public void Register(RegisterAuthDto authDto)
         {
             var validator = new UserValidator();
-            var result = validator.Validate(authDto);
-
-            if (!result.IsValid)
-            {
-                throw new Exception(result.Errors.FirstOrDefault()?.ErrorMessage ?? "Validation error");
-            }
+            ValidationTool.Validate(validator, authDto);
 
             _userService.Add(authDto);
         }
