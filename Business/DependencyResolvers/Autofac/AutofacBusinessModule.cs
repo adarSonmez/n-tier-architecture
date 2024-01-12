@@ -11,7 +11,12 @@ namespace Business.DependencyResolvers.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
+            builder.RegisterType<UserManager>().As<IUserService>();
+
             builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
         }
     }
 }
