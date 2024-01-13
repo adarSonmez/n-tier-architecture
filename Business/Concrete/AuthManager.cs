@@ -1,7 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects;
-using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstract;
@@ -39,7 +38,10 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         public IResult Register(RegisterAuthDto authDto)
         {
-            var result = BusinessRules.Run(CheckIfUserExists(authDto.Email));
+            var result = BusinessRules.Run(
+                CheckIfUserExists(authDto.Email),
+                CheckIfImageSizeValid(authDto.Image),
+                CheckIfImageIsValid(authDto.Image));
 
             if (result.Success)
             {
@@ -55,6 +57,32 @@ namespace Business.Concrete
             return _userService.GetByEmail(email) != null
                 ? new ErrorResult("User already exists")
                 : new SuccessResult();
+        }
+
+        private IResult CheckIfImageSizeValid(Microsoft.AspNetCore.Http.IFormFile? image)
+        {
+            if (image == null)
+            {
+                return new SuccessResult();
+            }
+
+            return image.Length > 2 * 1024 * 1024
+                ? new ErrorResult("Image size must be less than 2MB")
+                : new SuccessResult();
+        }
+
+        private IResult CheckIfImageIsValid(Microsoft.AspNetCore.Http.IFormFile? image)
+        {
+            if (image == null)
+            {
+                return new SuccessResult();
+            }
+
+            var validExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var extension = Path.GetExtension(image.FileName).ToLower();
+            return validExtensions.Contains(extension)
+                ? new SuccessResult()
+                : new ErrorResult("Image extension must be jpg, jpeg or png");
         }
     }
 }

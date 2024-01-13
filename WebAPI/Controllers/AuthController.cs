@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Domain.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -17,7 +16,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterAuthDto authDto) 
+        public IActionResult Register([FromForm] RegisterAuthDto authDto)
         {
             var result = _authService.Register(authDto);
 

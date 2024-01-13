@@ -9,22 +9,25 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         private readonly IUserDal _userDal;
+        private readonly IFileService _fileService;
 
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal, IFileService fileService)
         {
             _userDal = userDal;
+            _fileService = fileService;
         }
 
         public void Add(RegisterAuthDto authDto)
         {
             HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
+            _fileService.SaveImage(authDto.Image, out var imageUrl);
 
             var user = new User
             {
-                Id = 0, 
+                Id = 0,
                 Email = authDto.Email,
                 Name = authDto.Name,
-                ImageUrl = authDto.ImageUrl ?? string.Empty,
+                ImageUrl = imageUrl,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
             };
