@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Hashing;
@@ -35,11 +36,9 @@ namespace Business.Concrete
             return new SuccessResult("Login successful");
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Register(RegisterAuthDto authDto)
         {
-            var validator = new UserValidator();
-            ValidationTool.Validate(validator, authDto);
-
             var result = BusinessRules.Run(CheckIfUserExists(authDto.Email));
 
             if (result.Success)
