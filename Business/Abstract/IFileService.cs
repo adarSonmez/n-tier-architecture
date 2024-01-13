@@ -4,6 +4,8 @@ namespace Business.Abstract
 {
     public interface IFileService
     {
-        void SaveImage(IFormFile? file, out string fileName);
+        void SaveImageToServer(IFormFile? file, out string fileName);
+        Task<string> FileSaveToFtp(IFormFile? file);
+        byte[]? ConvertFileToByteArray(IFormFile? file, out string fileName);
     }
 }

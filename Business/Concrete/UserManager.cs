@@ -22,7 +22,14 @@ namespace Business.Concrete
             HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
             _fileService.SaveImage(authDto.Image, out var imageUrl);
 
-            var user = new User
+            var user = CreateUser(authDto, passwordHash, passwordSalt, imageUrl);
+
+            _userDal.Add(user);
+        }
+
+        private User CreateUser(RegisterAuthDto authDto, byte[] passwordHash, byte[] passwordSalt, string imageUrl)
+        {
+            return new User
             {
                 Id = 0,
                 Email = authDto.Email,
@@ -31,8 +38,6 @@ namespace Business.Concrete
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
             };
-
-            _userDal.Add(user);
         }
 
         public User? GetByEmail(string email)
