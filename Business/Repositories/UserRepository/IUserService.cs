@@ -1,7 +1,7 @@
 ﻿using Domain.Dtos;
 using Domain.Entities.Concrete;
 
-namespace Business.Abstract
+namespace Business.Repositories.UserRepository
 {
     public interface IUserService
     {

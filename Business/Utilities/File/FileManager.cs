@@ -1,9 +1,8 @@
-﻿using Business.Abstract;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Business.Concrete
+namespace Business.Utilities.File
 {
     public class FileManager : IFileService
     {

@@ -1,7 +1,7 @@
 ﻿using Core.Utilities.Results.Abstract;
 using Domain.Dtos;
 
-namespace Business.Abstract
+namespace Business.Authentication
 {
     public interface IAuthService
     {

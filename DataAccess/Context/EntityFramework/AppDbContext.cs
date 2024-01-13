@@ -2,9 +2,9 @@
 using Domain.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.Concrete.EntityFramework.Context
+namespace DataAccess.Context.EntityFramework
 {
-    public class AppDbContext: DbContextBase
+    public class AppDbContext : DbContextBase
     {
         public DbSet<User>? Users { get; set; }
         public DbSet<UserOperationClaim>? UserOperationClaims { get; set; }

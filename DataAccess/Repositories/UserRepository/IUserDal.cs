@@ -1,7 +1,7 @@
 ﻿using Core.DataAccess;
 using Domain.Entities.Concrete;
 
-namespace DataAccess.Abstract
+namespace DataAccess.Repositories.UserRepository
 {
     public interface IUserDal : IEntityRepository<User>
     {

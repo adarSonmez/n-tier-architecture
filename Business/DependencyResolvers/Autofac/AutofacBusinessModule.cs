@@ -1,10 +1,14 @@
 ﻿using Autofac;
-using Autofac.Extras.DynamicProxy;  
-using Business.Abstract;
-using Business.Concrete;
+using Autofac.Extras.DynamicProxy;
+using Business.Authentication;
+using Business.Repositories.OperationClaimRepository;
+using Business.Repositories.UserOperationClaimRepository;
+using Business.Repositories.UserRepository;
+using Business.Utilities.File;
 using Castle.DynamicProxy;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
+using DataAccess.Repositories.OperationClaimRepository;
+using DataAccess.Repositories.UserOperationClaimRepository;
+using DataAccess.Repositories.UserRepository;
 
 namespace Business.DependencyResolvers.Autofac
 {

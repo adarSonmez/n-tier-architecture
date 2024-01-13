@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+﻿using Business.Repositories.UserRepository;
 using Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 

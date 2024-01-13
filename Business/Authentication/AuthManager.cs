@@ -1,5 +1,5 @@
-﻿using Business.Abstract;
-using Business.ValidationRules.FluentValidation;
+﻿using Business.Repositories.UserRepository;
+using Business.Repositories.UserRepository.Validation.FluentValidation;
 using Core.Aspects;
 using Core.Utilities.Business;
 using Core.Utilities.Hashing;
@@ -7,7 +7,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Domain.Dtos;
 
-namespace Business.Concrete
+namespace Business.Authentication
 {
     public class AuthManager : IAuthService
     {

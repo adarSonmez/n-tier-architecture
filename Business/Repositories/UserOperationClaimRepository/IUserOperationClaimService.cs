@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.Concrete;
 
-namespace Business.Abstract
+namespace Business.Repositories.UserOperationClaimRepository
 {
     public interface IUserOperationClaimService
     {

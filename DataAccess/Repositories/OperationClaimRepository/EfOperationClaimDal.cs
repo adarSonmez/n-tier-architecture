@@ -1,9 +1,8 @@
 ﻿using Core.DataAccess.EntityFramework;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Context;
+using DataAccess.Context.EntityFramework;
 using Domain.Entities.Concrete;
 
-namespace DataAccess.Concrete.EntityFramework
+namespace DataAccess.Repositories.OperationClaimRepository
 {
     public class EfOperationClaimDal : EfEntityRepositoryBase<OperationClaim, AppDbContext>, IOperationClaimDal
     {

@@ -1,10 +1,10 @@
-﻿using Business.Abstract;
+﻿using Business.Utilities.File;
 using Core.Utilities.Hashing;
-using DataAccess.Abstract;
+using DataAccess.Repositories.UserRepository;
 using Domain.Dtos;
 using Domain.Entities.Concrete;
 
-namespace Business.Concrete
+namespace Business.Repositories.UserRepository
 {
     public class UserManager : IUserService
     {
@@ -20,7 +20,7 @@ namespace Business.Concrete
         public void Add(RegisterAuthDto authDto)
         {
             HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
-            _fileService.SaveImage(authDto.Image, out var imageUrl);
+            _fileService.SaveImageToServer(authDto.Image, out var imageUrl);
 
             var user = CreateUser(authDto, passwordHash, passwordSalt, imageUrl);
 

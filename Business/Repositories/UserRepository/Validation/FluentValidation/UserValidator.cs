@@ -1,9 +1,9 @@
 ﻿using Domain.Dtos;
 using FluentValidation;
 
-namespace Business.ValidationRules.FluentValidation
+namespace Business.Repositories.UserRepository.Validation.FluentValidation
 {
-    public class UserValidator: AbstractValidator<RegisterAuthDto>
+    public class UserValidator : AbstractValidator<RegisterAuthDto>
     {
         public UserValidator()
         {

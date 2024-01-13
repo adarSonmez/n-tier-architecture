@@ -1,8 +1,7 @@
-﻿using Business.Abstract;
-using DataAccess.Abstract;
+﻿using DataAccess.Repositories.UserOperationClaimRepository;
 using Domain.Entities.Concrete;
 
-namespace Business.Concrete
+namespace Business.Repositories.UserOperationClaimRepository
 {
     public class UserOperationClaimManager : IUserOperationClaimService
     {
