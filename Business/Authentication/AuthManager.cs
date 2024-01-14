@@ -1,4 +1,5 @@
-﻿using Business.Repositories.UserRepository;
+﻿using Business.Authentication.Constants;
+using Business.Repositories.UserRepository;
 using Business.Repositories.UserRepository.Validation.FluentValidation;
 using Core.Aspects;
 using Core.Utilities.Business;
@@ -24,15 +25,15 @@ namespace Business.Authentication
 
             if (user == null)
             {
-                return new ErrorResult("User not found");
+                return new ErrorResult(Messages.UserNotFound);
             }
 
             if (!HashingHelper.VerifyPasswordHash(authDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return new ErrorResult("Wrong password");
+                return new ErrorResult(Messages.UserPasswordWrong);
             }
 
-            return new SuccessResult("Login successful");
+            return new SuccessResult(Messages.UserLoginSuccessful);
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -45,7 +46,7 @@ namespace Business.Authentication
 
             if (result.Success)
             {
-                result.Message = "User registered";
+                result.Message = Messages.UserRegistered;
                 _userService.Add(authDto);
             }
 
@@ -55,7 +56,7 @@ namespace Business.Authentication
         private IResult CheckIfUserExists(string email)
         {
             return _userService.GetByEmail(email) != null
-                ? new ErrorResult("User already exists")
+                ? new ErrorResult(Messages.UserAlreadyExists)
                 : new SuccessResult();
         }
 
@@ -67,7 +68,7 @@ namespace Business.Authentication
             }
 
             return image.Length > 2 * 1024 * 1024
-                ? new ErrorResult("Image size must be less than 2MB")
+                ? new ErrorResult(Messages.UserImageSizeInvalid)
                 : new SuccessResult();
         }
 
@@ -82,7 +83,7 @@ namespace Business.Authentication
             var extension = Path.GetExtension(image.FileName).ToLower();
             return validExtensions.Contains(extension)
                 ? new SuccessResult()
-                : new ErrorResult("Image extension must be jpg, jpeg or png");
+                : new ErrorResult(Messages.UserImageExtensionIsValid);
         }
     }
 }

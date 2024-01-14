@@ -1,4 +1,5 @@
-﻿using Business.Utilities.File;
+﻿using Business.Repositories.UserRepository.Constants;
+using Business.Utilities.File;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -35,7 +36,7 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult();
+            return new SuccessResult(Messages.UserAdded);
         }
 
         private User CreateUser(RegisterAuthDto authDto, byte[] passwordHash, byte[] passwordSalt, string imageUrl)
@@ -57,10 +58,10 @@ namespace Business.Repositories.UserRepository
 
             if (user == null)
             {
-                return new ErrorDataResult<User?>("User not found");
+                return new ErrorDataResult<User?>(Messages.UserNotFound);
             }
 
-            return new SuccessDataResult<User?>(user);
+            return new SuccessDataResult<User?>(user, Messages.UserRetrieved);
         }
 
         public IDataResult<List<User>> GetList()
@@ -69,10 +70,10 @@ namespace Business.Repositories.UserRepository
 
             if (users == null)
             {
-                return new ErrorDataResult<List<User>>("Users not found");
+                return new ErrorDataResult<List<User>>(Messages.UserNotFound);
             }
 
-            return new SuccessDataResult<List<User>>(users);
+            return new SuccessDataResult<List<User>>(users, Messages.UsersListed);
         }
 
         public IDataResult<User?> GetByUserId(int userId)
@@ -81,10 +82,10 @@ namespace Business.Repositories.UserRepository
 
             if (user == null)
             {
-                return new ErrorDataResult<User?>("User not found");
+                return new ErrorDataResult<User?>(Messages.UserNotFound);
             }
 
-            return new SuccessDataResult<User?>(user);
+            return new SuccessDataResult<User?>(user, Messages.UserRetrieved);
         }
 
         public IResult Update(User user)
@@ -98,7 +99,7 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult();
+            return new SuccessResult(Messages.UserUpdated);
         }
 
         public IResult Delete(User user)
@@ -112,7 +113,7 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult();
+            return new SuccessResult(Messages.UserDeleted);
         }
     }
 }
