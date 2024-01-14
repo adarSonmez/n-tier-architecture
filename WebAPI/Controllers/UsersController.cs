@@ -1,5 +1,6 @@
 ﻿using Business.Repositories.UserRepository;
 using Domain.Dtos;
+using Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -18,7 +19,61 @@ namespace WebAPI.Controllers
         [HttpGet("getList")]
         public IActionResult GetList()
         {
-            return Ok(_userService.GetList());
+            var result = _userService.GetList();
+            if (result.Success) 
+                return Ok(result);
+            
+            return BadRequest(result);
+        }
+
+        [HttpGet("getByEmail")]
+        public IActionResult GetByEmail(string email)
+        {
+            var result = _userService.GetByEmail(email);
+            if (result.Success) 
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getById")]
+        public IActionResult GetByUserId(int userId)
+        {
+            var result = _userService.GetByUserId(userId);
+            if (result.Success) 
+                return Ok(result);
+
+            return BadRequest(result);  
+        }
+
+        [HttpPut("update")]
+        public IActionResult Update(User user)
+        {
+            var result = _userService.Update(user);
+            if (result.Success) 
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult Delete(User user)
+        {
+            var result = _userService.Delete(user);
+            if (result.Success) 
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("changePassword")]
+        public IActionResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
+        {
+            var result = _userService.ChangePassword(userChangePasswordDto);
+            if (result.Success) 
+                return Ok(result);
+
+            return BadRequest(result);
         }
     }
 }

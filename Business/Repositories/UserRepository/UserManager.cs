@@ -38,7 +38,7 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult(Messages.UserAdded);
+            return new SuccessResult(UserMessages.Added);
         }
 
         private User CreateUser(RegisterAuthDto authDto, byte[] passwordHash, byte[] passwordSalt, string imageUrl)
@@ -57,37 +57,34 @@ namespace Business.Repositories.UserRepository
         public IDataResult<User?> GetByEmail(string email)
         {
             var user = _userDal.Get(u => u.Email == email);
-
             if (user == null)
             {
-                return new ErrorDataResult<User?>(Messages.UserNotFound);
+                return new ErrorDataResult<User?>(UserMessages.NotFound);
             }
 
-            return new SuccessDataResult<User?>(user, Messages.UserRetrieved);
+            return new SuccessDataResult<User?>(user, UserMessages.Retrieved);
         }
 
         public IDataResult<List<User>> GetList()
         {
             var users = _userDal.GetAll();
-
             if (users == null)
             {
-                return new ErrorDataResult<List<User>>(Messages.UserNotFound);
+                return new ErrorDataResult<List<User>>(UserMessages.NotFound);
             }
 
-            return new SuccessDataResult<List<User>>(users, Messages.UsersListed);
+            return new SuccessDataResult<List<User>>(users, UserMessages.Listed);
         }
 
         public IDataResult<User?> GetByUserId(int userId)
         {
             var user = _userDal.Get(u => u.Id == userId);
-
             if (user == null)
             {
-                return new ErrorDataResult<User?>(Messages.UserNotFound);
+                return new ErrorDataResult<User?>(UserMessages.NotFound);
             }
 
-            return new SuccessDataResult<User?>(user, Messages.UserRetrieved);
+            return new SuccessDataResult<User?>(user, UserMessages.Retrieved);
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -102,7 +99,7 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult(Messages.UserUpdated);
+            return new SuccessResult(UserMessages.Updated);
         }
 
         public IResult Delete(User user)
@@ -116,22 +113,21 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult(Messages.UserDeleted);
+            return new SuccessResult(UserMessages.Deleted);
         }
 
         [ValidationAspect(typeof(UserChangePasswordValidator))]
         public IResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
         {
             var user = _userDal.Get(u => u.Id == userChangePasswordDto.UserId);
-
             if (user == null)
             {
-                return new ErrorResult(Messages.UserNotFound);
+                return new ErrorResult(UserMessages.NotFound);
             }
 
             if (!HashingHelper.VerifyPasswordHash(userChangePasswordDto.OldPassword, user.PasswordHash, user.PasswordSalt))
             {
-                return new ErrorResult(Messages.UserWrongPassword);
+                return new ErrorResult(UserMessages.WrongPassword);
             }
 
             HashingHelper.CreatePasswordHash(userChangePasswordDto.NewPassword, out var passwordHash, out var passwordSalt);
@@ -147,7 +143,7 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
-            return new SuccessResult(Messages.UserPasswordChanged);
+            return new SuccessResult(UserMessages.PasswordChanged);
         }
     }
 }

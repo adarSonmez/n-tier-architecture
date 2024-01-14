@@ -25,15 +25,15 @@ namespace Business.Authentication
 
             if (user == null)
             {
-                return new ErrorResult(Messages.UserNotFound);
+                return new ErrorResult(AuthMessages.UserNotFound);
             }
 
             if (!HashingHelper.VerifyPasswordHash(authDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return new ErrorResult(Messages.UserPasswordWrong);
+                return new ErrorResult(AuthMessages.UserPasswordWrong);
             }
 
-            return new SuccessResult(Messages.UserLoginSuccessful);
+            return new SuccessResult(AuthMessages.UserLoginSuccessful);
         }
 
         [ValidationAspect(typeof(AuthValidator))]
@@ -46,7 +46,7 @@ namespace Business.Authentication
 
             if (result.Success)
             {
-                result.Message = Messages.UserRegistered;
+                result.Message = AuthMessages.UserRegistered;
                 _userService.Add(authDto);
             }
 
@@ -56,7 +56,7 @@ namespace Business.Authentication
         private IResult CheckIfUserExists(string email)
         {
             return _userService.GetByEmail(email) != null
-                ? new ErrorResult(Messages.UserAlreadyExists)
+                ? new ErrorResult(AuthMessages.UserAlreadyExists)
                 : new SuccessResult();
         }
 
@@ -68,7 +68,7 @@ namespace Business.Authentication
             }
 
             return image.Length > 2 * 1024 * 1024
-                ? new ErrorResult(Messages.UserImageSizeInvalid)
+                ? new ErrorResult(AuthMessages.UserImageSizeInvalid)
                 : new SuccessResult();
         }
 
@@ -83,7 +83,7 @@ namespace Business.Authentication
             var extension = Path.GetExtension(image.FileName).ToLower();
             return validExtensions.Contains(extension)
                 ? new SuccessResult()
-                : new ErrorResult(Messages.UserImageExtensionIsValid);
+                : new ErrorResult(AuthMessages.UserImageExtensionInvalid);
         }
     }
 }
