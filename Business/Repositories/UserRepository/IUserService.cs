@@ -1,12 +1,16 @@
-﻿using Domain.Dtos;
+﻿using Core.Utilities.Results.Abstract;
+using Domain.Dtos;
 using Domain.Entities.Concrete;
 
 namespace Business.Repositories.UserRepository
 {
     public interface IUserService
     {
-        void Add(RegisterAuthDto authDto);
-        List<User> GetList();
-        User? GetByEmail(string email);
+        IResult Add(RegisterAuthDto authDto);
+        IDataResult<List<User>> GetList();
+        IDataResult<User?> GetByEmail(string email);
+        IDataResult<User?> GetByUserId(int userId);
+        IResult Update(User user);
+        IResult Delete(User user);
     }
 }

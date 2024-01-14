@@ -1,5 +1,7 @@
 ﻿using Business.Utilities.File;
 using Core.Utilities.Hashing;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Repositories.UserRepository;
 using Domain.Dtos;
 using Domain.Entities.Concrete;
@@ -17,14 +19,23 @@ namespace Business.Repositories.UserRepository
             _fileService = fileService;
         }
 
-        public void Add(RegisterAuthDto authDto)
+        public IResult Add(RegisterAuthDto authDto)
         {
-            HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
-            _fileService.SaveImageToServer(authDto.Image, out var imageUrl);
+            try
+            {
+                HashingHelper.CreatePasswordHash(authDto.Password, out var passwordHash, out var passwordSalt);
+                _fileService.SaveImageToServer(authDto.Image, out var imageUrl);
 
-            var user = CreateUser(authDto, passwordHash, passwordSalt, imageUrl);
+                var user = CreateUser(authDto, passwordHash, passwordSalt, imageUrl);
 
-            _userDal.Add(user);
+                _userDal.Add(user);
+            }
+            catch (Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
+
+            return new SuccessResult();
         }
 
         private User CreateUser(RegisterAuthDto authDto, byte[] passwordHash, byte[] passwordSalt, string imageUrl)
@@ -40,14 +51,68 @@ namespace Business.Repositories.UserRepository
             };
         }
 
-        public User? GetByEmail(string email)
+        public IDataResult<User?> GetByEmail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            var user = _userDal.Get(u => u.Email == email);
+
+            if (user == null)
+            {
+                return new ErrorDataResult<User?>("User not found");
+            }
+
+            return new SuccessDataResult<User?>(user);
         }
 
-        public List<User> GetList()
+        public IDataResult<List<User>> GetList()
         {
-            return _userDal.GetAll();
+            var users = _userDal.GetAll();
+
+            if (users == null)
+            {
+                return new ErrorDataResult<List<User>>("Users not found");
+            }
+
+            return new SuccessDataResult<List<User>>(users);
+        }
+
+        public IDataResult<User?> GetByUserId(int userId)
+        {
+            var user = _userDal.Get(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return new ErrorDataResult<User?>("User not found");
+            }
+
+            return new SuccessDataResult<User?>(user);
+        }
+
+        public IResult Update(User user)
+        {
+            try
+            {
+                _userDal.Update(user);
+            }
+            catch (Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
+
+            return new SuccessResult();
+        }
+
+        public IResult Delete(User user)
+        {
+            try
+            {
+                _userDal.Delete(user);
+            }
+            catch (Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
+
+            return new SuccessResult();
         }
     }
 }

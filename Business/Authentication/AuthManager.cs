@@ -20,7 +20,7 @@ namespace Business.Authentication
 
         public IResult Login(LoginAuthDto authDto)
         {
-            var user = _userService.GetByEmail(authDto.Email);
+            var user = _userService.GetByEmail(authDto.Email).Data;
 
             if (user == null)
             {
