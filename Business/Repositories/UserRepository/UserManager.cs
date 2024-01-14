@@ -1,5 +1,7 @@
 ﻿using Business.Repositories.UserRepository.Constants;
+using Business.Repositories.UserRepository.Validation.FluentValidation;
 using Business.Utilities.File;
+using Core.Aspects;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -88,6 +90,7 @@ namespace Business.Repositories.UserRepository
             return new SuccessDataResult<User?>(user, Messages.UserRetrieved);
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
             try
@@ -114,6 +117,37 @@ namespace Business.Repositories.UserRepository
             }
 
             return new SuccessResult(Messages.UserDeleted);
+        }
+
+        [ValidationAspect(typeof(UserChangePasswordValidator))]
+        public IResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
+        {
+            var user = _userDal.Get(u => u.Id == userChangePasswordDto.UserId);
+
+            if (user == null)
+            {
+                return new ErrorResult(Messages.UserNotFound);
+            }
+
+            if (!HashingHelper.VerifyPasswordHash(userChangePasswordDto.OldPassword, user.PasswordHash, user.PasswordSalt))
+            {
+                return new ErrorResult(Messages.UserWrongPassword);
+            }
+
+            HashingHelper.CreatePasswordHash(userChangePasswordDto.NewPassword, out var passwordHash, out var passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            try
+            {
+                _userDal.Update(user);
+            }
+            catch (Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
+
+            return new SuccessResult(Messages.UserPasswordChanged);
         }
     }
 }

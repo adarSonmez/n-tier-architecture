@@ -1,6 +1,6 @@
 ﻿using Business.Authentication.Constants;
+using Business.Authentication.Validation.FluentValidation;
 using Business.Repositories.UserRepository;
-using Business.Repositories.UserRepository.Validation.FluentValidation;
 using Core.Aspects;
 using Core.Utilities.Business;
 using Core.Utilities.Hashing;
@@ -36,7 +36,7 @@ namespace Business.Authentication
             return new SuccessResult(Messages.UserLoginSuccessful);
         }
 
-        [ValidationAspect(typeof(UserValidator))]
+        [ValidationAspect(typeof(AuthValidator))]
         public IResult Register(RegisterAuthDto authDto)
         {
             var result = BusinessRules.Run(

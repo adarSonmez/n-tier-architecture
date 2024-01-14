@@ -8,5 +8,7 @@
         public static string UserRetrieved = "User retrieved successfully.";
         public static string UsersListed = "Users listed successfully.";
         public static string UserNotFound = "User not found.";
+        public static string UserWrongPassword = "Wrong password.";
+        public static string UserPasswordChanged = "Password changed successfully.";
     }
 }
