@@ -79,5 +79,23 @@ namespace Business.Repositories.UserOperationClaimRepository
                 return new ErrorResult(e.Message);
             }
         }
+
+        public IResult DeleteById(int id)
+        {
+            try
+            {
+                var operationClaim = _userOperationClaimDal.Get(uoc => uoc.Id == id);
+                if (operationClaim == null)
+                {
+                    return new ErrorResult(UserOperationClaimMessages.NotFound);
+                }
+                _userOperationClaimDal.Delete(operationClaim);
+                return new SuccessResult(UserOperationClaimMessages.Deleted);
+            }
+            catch (Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
+        }
     }
 }

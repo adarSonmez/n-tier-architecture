@@ -14,6 +14,7 @@ namespace Core.DataAccess.EntityFramework
             using var context = new TContext();
             var addedEntity = context.Entry(entity);
             addedEntity.State = EntityState.Added;
+            context.SaveChanges();
         }
 
         public void Delete(TEntity entity)
@@ -21,6 +22,7 @@ namespace Core.DataAccess.EntityFramework
             using var context = new TContext();
             var addedEntity = context.Entry(entity);
             addedEntity.State = EntityState.Deleted;
+            context.SaveChanges();
         }
 
         public void Update(TEntity entity)
@@ -28,6 +30,7 @@ namespace Core.DataAccess.EntityFramework
             using var context = new TContext();
             var addedEntity = context.Entry(entity);
             addedEntity.State = EntityState.Modified;
+            context.SaveChanges();
         }
 
         public TEntity? Get(Expression<Func<TEntity, bool>> filter)

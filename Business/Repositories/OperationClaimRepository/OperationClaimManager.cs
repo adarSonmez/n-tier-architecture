@@ -44,6 +44,24 @@ namespace Business.Repositories.OperationClaimRepository
             }
         }
 
+        public IResult DeleteById(int id)
+        {
+            try
+            {
+                var operationClaim = _operationClaimDal.Get(oc => oc.Id == id);
+                if (operationClaim == null)
+                {
+                    return new ErrorResult(OperationClaimMessages.NotFound);
+                }
+                _operationClaimDal.Delete(operationClaim);
+                return new SuccessResult(OperationClaimMessages.Deleted);
+            }
+            catch(Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
+        }
+
         public IDataResult<OperationClaim?> GetById(int id)
         {
             var operationClaim = _operationClaimDal.Get(oc => oc.Id == id);

@@ -65,5 +65,15 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
+        [HttpDelete("deleteById")]
+        public IActionResult DeleteById(int id)
+        {
+            var result = _operationClaimService.DeleteById(id);
+            if (result.Success)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
     }
 }

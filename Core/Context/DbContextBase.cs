@@ -6,7 +6,7 @@ namespace Core.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\\MSSQLLocalDB;Database=NTierArchitecture;Integrated Security=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=NTierArchitecture;Integrated Security=True;");
         }
     }
 }

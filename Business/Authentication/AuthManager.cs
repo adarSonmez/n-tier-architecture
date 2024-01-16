@@ -55,7 +55,7 @@ namespace Business.Authentication
 
         private IResult CheckIfUserExists(string email)
         {
-            return _userService.GetByEmail(email) != null
+            return _userService.GetByEmail(email).Data != null
                 ? new ErrorResult(AuthMessages.UserAlreadyExists)
                 : new SuccessResult();
         }

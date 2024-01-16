@@ -66,6 +66,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("deleteById")]
+        public IActionResult DeleteById(int userId)
+        {
+            var result = _userService.DeleteById(userId);
+            if (result.Success) 
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
         [HttpPost("changePassword")]
         public IActionResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
         {

@@ -10,5 +10,6 @@ namespace Business.Repositories.UserOperationClaimRepository
         IDataResult<List<UserOperationClaim>?> GetList();
         IResult Update(UserOperationClaim operationClaim);
         IResult Delete(UserOperationClaim operationClaim);
+        IResult DeleteById(int id);
     }
 }

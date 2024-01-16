@@ -12,6 +12,7 @@ namespace Business.Repositories.UserRepository
         IDataResult<User?> GetByUserId(int userId);
         IResult Update(User user);
         IResult Delete(User user);
+        IResult DeleteById(int id);
         IResult ChangePassword(UserChangePasswordDto userChangePasswordDto);
     }
 }

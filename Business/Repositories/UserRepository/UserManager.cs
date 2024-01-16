@@ -45,7 +45,6 @@ namespace Business.Repositories.UserRepository
         {
             return new User
             {
-                Id = 0,
                 Email = authDto.Email,
                 Name = authDto.Name,
                 ImageUrl = imageUrl,
@@ -113,6 +112,24 @@ namespace Business.Repositories.UserRepository
                 return new ErrorResult(e.Message);
             }
 
+            return new SuccessResult(UserMessages.Deleted);
+        }
+
+        public IResult DeleteById(int id)
+        {
+            var user = _userDal.Get(u => u.Id == id);
+            if (user == null)
+            {
+                return new ErrorResult(UserMessages.NotFound);
+            }
+            try
+            {
+                _userDal.Delete(user);
+            }
+            catch (Exception e)
+            {
+                return new ErrorResult(e.Message);
+            }
             return new SuccessResult(UserMessages.Deleted);
         }
 
