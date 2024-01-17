@@ -8,5 +8,8 @@
         public static string Retrieved = "User Operation claim retrieved successfully.";
         public static string Listed = "User Operation claims listed successfully.";
         public static string NotFound = "User Operation claim not found.";
+        public static string OperationClaimAlreadySet = "User already has this operation claim.";
+        public static string OperationClaimNotFound = "Operation claim not found.";
+        public static string UserNotFound = "User not found.";
     }
 }

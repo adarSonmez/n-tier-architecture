@@ -1,6 +1,7 @@
 ﻿using Business.Repositories.OperationClaimRepository.Constants;
 using Business.Repositories.OperationClaimRepository.Validation.FluentValidation;
 using Core.Aspects;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Repositories.OperationClaimRepository;
@@ -22,6 +23,13 @@ namespace Business.Repositories.OperationClaimRepository
         {
             try
             {
+                IResult result = BusinessRules.Run(IsNameExistForAdd(operationClaim.Name));
+
+                if (!result.Success)
+                {
+                    return result;
+                }
+
                 _operationClaimDal.Add(operationClaim);
                 return new SuccessResult(OperationClaimMessages.Added);
             }
@@ -89,6 +97,13 @@ namespace Business.Repositories.OperationClaimRepository
         {
             try
             {
+                IResult result = BusinessRules.Run(IsNameExistForUpdate(operationClaim));
+
+                if (!result.Success)
+                {
+                    return result;
+                }
+
                 _operationClaimDal.Update(operationClaim);
                 return new SuccessResult(OperationClaimMessages.Updated);
             }
@@ -97,5 +112,30 @@ namespace Business.Repositories.OperationClaimRepository
                 return new ErrorResult(e.Message);
             }
         }
-    }
+
+        private IResult IsNameExistForAdd(string name)
+        {
+            var operationClaim = _operationClaimDal.Get(oc => oc.Name == name);
+            if (operationClaim != null)
+            {
+                return new ErrorResult(OperationClaimMessages.NameAlreadyExist);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult IsNameExistForUpdate(OperationClaim operationClaim)
+        {
+            var operationClaimToCheck = _operationClaimDal.Get(oc => oc.Id == operationClaim.Id);
+            if (operationClaimToCheck == null)
+            {
+                return new ErrorResult(OperationClaimMessages.NotFound);
+            }
+            var operationClaimWithName = _operationClaimDal.Get(oc => oc.Name == operationClaim.Name);
+            if (operationClaimWithName != null && operationClaimWithName.Id != operationClaim.Id)
+            {
+                return new ErrorResult(OperationClaimMessages.NameAlreadyExist);
+            }
+            return new SuccessResult();
+        }
+    }   
 }

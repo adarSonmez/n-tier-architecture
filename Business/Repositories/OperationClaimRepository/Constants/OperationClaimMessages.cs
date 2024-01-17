@@ -8,5 +8,6 @@
         public static string Retrieved = "Operation claim retrieved successfully.";
         public static string Listed = "Operation claims listed successfully.";
         public static string NotFound = "Operation claim not found.";
+        public static string NameAlreadyExist = "Operation claim name already exists.";
     }
 }
