@@ -1,4 +1,6 @@
-﻿namespace Business.Repositories.UserRepository.Constants
+﻿using Core.Entities.Concrete;
+
+namespace Business.Repositories.UserRepository.Constants
 {
     public class UserMessages
     {
@@ -10,5 +12,7 @@
         public static string NotFound = "User not found.";
         public static string WrongPassword = "Wrong password.";
         public static string PasswordChanged = "Password changed successfully.";
+        public static string ClaimsNotFound = "Claims not found.";
+        public static string ClaimsRetrieved = "Claims retrieved successfully.";
     }
 }

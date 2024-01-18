@@ -1,5 +1,5 @@
-﻿using Core.Utilities.Results.Abstract;
-using Domain.Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results.Abstract;
 
 namespace Business.Repositories.UserOperationClaimRepository
 {

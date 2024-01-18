@@ -1,6 +1,6 @@
-﻿using Core.Utilities.Results.Abstract;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results.Abstract;
 using Domain.Dtos;
-using Domain.Entities.Concrete;
 
 namespace Business.Repositories.UserRepository
 {
@@ -14,5 +14,6 @@ namespace Business.Repositories.UserRepository
         IResult Delete(User user);
         IResult DeleteById(int id);
         IResult ChangePassword(UserChangePasswordDto userChangePasswordDto);
+        IDataResult<List<OperationClaim>?> GetClaims(int userId);
     }
 }

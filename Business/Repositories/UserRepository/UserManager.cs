@@ -2,12 +2,12 @@
 using Business.Repositories.UserRepository.Validation.FluentValidation;
 using Business.Utilities.File;
 using Core.Aspects;
+using Core.Entities.Concrete;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Repositories.UserRepository;
 using Domain.Dtos;
-using Domain.Entities.Concrete;
 
 namespace Business.Repositories.UserRepository
 {
@@ -161,6 +161,18 @@ namespace Business.Repositories.UserRepository
             }
 
             return new SuccessResult(UserMessages.PasswordChanged);
+        }
+
+        public IDataResult<List<OperationClaim>?> GetClaims(int userId)
+        {
+            var claims = _userDal.GetClaims(userId);
+
+            if (claims == null)
+            {
+                return new ErrorDataResult<List<OperationClaim>?>(UserMessages.ClaimsNotFound);
+            }
+
+            return new SuccessDataResult<List<OperationClaim>?>(claims, UserMessages.ClaimsRetrieved);
         }
     }
 }

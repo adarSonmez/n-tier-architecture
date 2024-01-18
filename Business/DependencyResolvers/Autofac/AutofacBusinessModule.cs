@@ -1,4 +1,4 @@
-﻿using Autofac;
+﻿    using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Authentication;
 using Business.Repositories.OperationClaimRepository;
@@ -6,6 +6,7 @@ using Business.Repositories.UserOperationClaimRepository;
 using Business.Repositories.UserRepository;
 using Business.Utilities.File;
 using Castle.DynamicProxy;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Repositories.OperationClaimRepository;
 using DataAccess.Repositories.UserOperationClaimRepository;
 using DataAccess.Repositories.UserRepository;
@@ -27,6 +28,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+            // Core
+            builder.RegisterType<TokenHandler>().As<ITokenHandler>();
 
             // Register aspect interceptors
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

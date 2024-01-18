@@ -2,10 +2,12 @@
 using Business.Authentication.Validation.FluentValidation;
 using Business.Repositories.UserRepository;
 using Core.Aspects;
+using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
+using Core.Utilities.Security.Jwt;
 using Domain.Dtos;
 
 namespace Business.Authentication
@@ -13,27 +15,37 @@ namespace Business.Authentication
     public class AuthManager : IAuthService
     {
         private readonly IUserService _userService;
+        private readonly ITokenHandler _tokenHandler;
 
-        public AuthManager(IUserService userService)
+        public AuthManager(IUserService userService, ITokenHandler tokenHandler)
         {
             _userService = userService;
+            _tokenHandler = tokenHandler;
         }
 
-        public IResult Login(LoginAuthDto authDto)
+        public IDataResult<Token?> Login(LoginAuthDto authDto)
         {
             var user = _userService.GetByEmail(authDto.Email).Data;
 
             if (user == null)
             {
-                return new ErrorResult(AuthMessages.UserNotFound);
+                return new ErrorDataResult<Token?>(AuthMessages.UserNotFound);
             }
 
             if (!HashingHelper.VerifyPasswordHash(authDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return new ErrorResult(AuthMessages.UserPasswordWrong);
+                return new ErrorDataResult<Token?>(AuthMessages.UserPasswordWrong);
             }
 
-            return new SuccessResult(AuthMessages.UserLoginSuccessful);
+            List<OperationClaim>? operationClaims = _userService.GetClaims(user.Id).Data;
+            if (operationClaims == null)
+            {
+                return new ErrorDataResult<Token?>(AuthMessages.UserClaimsNotFound);
+            }
+
+            var token = _tokenHandler.CreateAccessToken(user, operationClaims);
+
+            return new SuccessDataResult<Token?>(token, AuthMessages.UserLoginSuccessful);
         }
 
         [ValidationAspect(typeof(AuthValidator))]

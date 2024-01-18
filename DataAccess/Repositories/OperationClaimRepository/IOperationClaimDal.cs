@@ -1,5 +1,5 @@
 ﻿using Core.DataAccess;
-using Domain.Entities.Concrete;
+using Core.Entities.Concrete;
 
 namespace DataAccess.Repositories.OperationClaimRepository
 {

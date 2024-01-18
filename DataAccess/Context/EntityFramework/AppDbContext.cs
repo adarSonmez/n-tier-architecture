@@ -1,5 +1,5 @@
 ﻿using Core.Context;
-using Domain.Entities.Concrete;
+using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Context.EntityFramework

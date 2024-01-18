@@ -1,6 +1,6 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Context.EntityFramework;
-using Domain.Entities.Concrete;
+using Core.Entities.Concrete;
 
 namespace DataAccess.Repositories.UserOperationClaimRepository
 {

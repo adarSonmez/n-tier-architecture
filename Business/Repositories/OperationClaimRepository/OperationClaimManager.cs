@@ -1,11 +1,11 @@
 ﻿using Business.Repositories.OperationClaimRepository.Constants;
 using Business.Repositories.OperationClaimRepository.Validation.FluentValidation;
 using Core.Aspects;
+using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Repositories.OperationClaimRepository;
-using Domain.Entities.Concrete;
 
 namespace Business.Repositories.OperationClaimRepository
 {

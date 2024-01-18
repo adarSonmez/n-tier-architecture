@@ -1,4 +1,6 @@
-﻿namespace Business.Authentication.Constants
+﻿using Core.Utilities.Security.Jwt;
+
+namespace Business.Authentication.Constants
 {
     public class AuthMessages
     {
@@ -10,5 +12,6 @@
         public static string UserPasswordWrong = "User password wrong.";
         public static string UserImageSizeInvalid = "Image size must be less than 2MB";
         public static string UserImageExtensionInvalid = "Image extension must be .jpg, .jpeg or .png";
+        public static string UserClaimsNotFound  = "Claims not found.";
     }
 }

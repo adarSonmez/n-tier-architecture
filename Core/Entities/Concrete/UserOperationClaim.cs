@@ -1,6 +1,6 @@
-﻿using Core.Domain.Interfaces;
+﻿using Core.Entities.Interfaces;
 
-namespace Domain.Entities.Concrete
+namespace Core.Entities.Concrete
 {
     public class UserOperationClaim : IEntity
     {

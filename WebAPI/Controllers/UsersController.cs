@@ -1,6 +1,6 @@
 ﻿using Business.Repositories.UserRepository;
+using Core.Entities.Concrete;
 using Domain.Dtos;
-using Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

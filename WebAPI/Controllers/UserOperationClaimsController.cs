@@ -1,5 +1,5 @@
 ﻿using Business.Repositories.UserOperationClaimRepository;
-using Domain.Entities.Concrete;
+using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Concrete;
+﻿using Core.Entities.Concrete;
 using FluentValidation;
 
 namespace Business.Repositories.OperationClaimRepository.Validation.FluentValidation
